@@ -18,18 +18,18 @@ describe "ボウリングのスコア" do #メイン：ボウリングのスコ�
         context "全ての投球で１ピンずつ倒した場合" do
             it "20になること" do
                 @game = Bowling.new 
-
+                #@game: 新規インスタンス
                 20.times do
                     @game.add_score(1)
                 end
 
-                expect(@game.total_score).to eq 20
-            end
+                expect(@game.total_score).to eq 20 #期待する実際の数値
+            end 
         end
     end
 end
 
-
+#Ubuntu $ rspec spec/lib/bowling_spec.rb =>テストの実行
 
 # 1. `require "bowling"`: テストで使用する`bowling`モジュールを読み込みます。
 
