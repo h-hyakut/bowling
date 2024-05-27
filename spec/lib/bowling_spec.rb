@@ -84,7 +84,7 @@ describe "ボウリングのスコア計算" do #メイン：ボウリングの�
                 @game.add_score(10)
 
                 @game.add_score(5) 
-                @game. add_score(4)
+                @game.add_score(4)
 
                 add_many_scores(16,0)
 
@@ -101,7 +101,7 @@ describe "ボウリングのスコア計算" do #メイン：ボウリングの�
                 @game.add_score(10)
 
                 @game.add_score(5) 
-                @game. add_score(4)
+                @game.add_score(4)
                 
                 add_many_scores(14,0)
 
@@ -120,9 +120,9 @@ describe "ボウリングのスコア計算" do #メイン：ボウリングの�
                 @game.add_score(10)
 
                 @game.add_score(5) 
-                @game. add_score(4)
+                @game.add_score(4)
                 
-                add_many_scores(12,0)
+                add_many_scores(12,0)   
 
                 @game.calc_score
                 # 10 + 10 +(10) + 10+(10)+(10) +5+(5)+(5) + 4+(4) = 83
@@ -135,10 +135,10 @@ describe "ボウリングのスコア計算" do #メイン：ボウリングの�
                 @game.add_score(10)
 
                 @game.add_score(5) 
-                @game. add_score(4)
+                @game.add_score(4)
                 
                 add_many_scores(14,0)
-
+                
                 @game.add_score(10)
 
                 @game.calc_score

@@ -25,38 +25,63 @@ class Bowling
     def add_score(pins)
         #@total_score += pins #total_score = total_score+ pins
         @temp << pins
-        if @temp.size == 2
-            @scores << @temp
+        if @temp.size == 2 || strike?(@temp)
+            @scores << @temp #配列は複数形
             @temp = []
         end
     end
 
+    
+    #add score
+    def add_many_score(pins)
+      @temp << pins
+      if @temp.size == 2 || strike?(@temp)
+        @scores << @temp
+        @temp = []
+      end
+    end
+    #score.sum
     def calc_score
         @scores.each.with_index(1) do |score, index| #index:スコアの番号
-            #index(1) =>本来は0,1,2...で数えるけど、1から始まるようにする
-            if spare?(score) && not_last_frame?(index)
+        #index(1) =>本来は0,1,2...で数えるけど、1から始まるようにする
+
+        if strike?(score) && not_last_frame?(index)
+          # 次のフレームもストライクで、なおかつ最終フレーム以外なら、
+          # もう一つ次のフレームの一投目をボーナスの対象にする
+          if strike?(@scores[index]) && not_last_frame?(index + 1)
+            @total_score += 20 + @scores[index + 1].first
+          else
+            @total_score += 10 + @scores[index].inject(:+)
+          end
+            
+          elsif spare?(score) && not_last_frame?(index)
                 @total_score += calc_spare_bonus(index)
                 #if (score.inject(:+) == 10) && (index < 10)
             #@total_score += 10 + @score[index].first #[index:番号のみが入っている]
-            else
-                @total_score += score.inject(:+) #そのframeをそのまま合計に加算
-            end
+          else
+              @total_score += score.inject(:+) #そのframeをそのまま合計に加算
+          end
         end
-    end
-
-    private
+      end         
+                
+      private
+      #strike
+      def strike?(score)
+        score.first == 10
+      end
+        
     #スペアかどうか判定する
-    def spare?(score)
+      def spare?(score)
         score.inject(:+) == 10
-    end
+      end
 
-    def not_last_frame?(index)  #index == num わかりやすい
+      def not_last_frame?(index)  #index == num わかりやすい
         index < 10
-    end
+      end
 
-    def calc_spare_bonus(index)
+      def calc_spare_bonus(index)
         10 + @scores[index].first
-    end
+      end
  end
 
 
