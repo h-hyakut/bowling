@@ -44,33 +44,37 @@ class Bowling
     def calc_score
         @scores.each.with_index(1) do |score, index| #index:スコアの番号
         #index(1) =>本来は0,1,2...で数えるけど、1から始まるようにする
-
         if strike?(score) && not_last_frame?(index)
-          # 次のフレームもストライクで、なおかつ最終フレーム以外なら、
-          # もう一つ次のフレームの一投目をボーナスの対象にする
-          if strike?(@scores[index]) && not_last_frame?(index + 1)
-            @total_score += 20 + @scores[index + 1].first
-          else
-            @total_score += 10 + @scores[index].inject(:+)
-          end
-            
-          elsif spare?(score) && not_last_frame?(index)
-                @total_score += calc_spare_bonus(index)
-                #if (score.inject(:+) == 10) && (index < 10)
-            #@total_score += 10 + @score[index].first #[index:番号のみが入っている]
+          @total_score += calc_strike_bonus(index)
+        # 最終フレーム以外でのスペアなら、スコアにボーナスを含めて合計する
+        elsif spare?(score) && not_last_frame?(index)
+          @total_score += calc_spare_bonus(index)
+          #if (score.inject(:+) == 10) && (index < 10)
+          #@total_score += 10 + @score[index].first #[index:番号のみが入っている]
           else
               @total_score += score.inject(:+) #そのframeをそのまま合計に加算
           end
         end
       end         
-                
+      
       private
       #strike
       def strike?(score)
         score.first == 10
       end
+      
+      def calc_strike_bonus(index)
+      #ストライク＆次のフレームもストライク（最終フレーム以外）なら、
+      #もう一つ次のフレームの一投目をボーナスの対象にする
+        if strike?(@scores[index]) && not_last_frame?(index + 1)
+          20 + @scores[index + 1].first
+        else
+          10 + @scores[index].inject(:+)
+        end
+      end
         
-    #スペアかどうか判定する
+        
+      #スペアかどうか判定する
       def spare?(score)
         score.inject(:+) == 10
       end
