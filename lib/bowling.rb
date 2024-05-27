@@ -14,7 +14,7 @@
 class Bowling
     def initialize 
         @total_score = 0
-        @score = []
+        @scores = []
         @temp = []
     end
 
@@ -23,21 +23,21 @@ class Bowling
     end
 
     def add_score(pins)
-        # @total_score += pins #total_score = total_score+ pins
+        #@total_score += pins #total_score = total_score+ pins
         @temp << pins
         if @temp.size == 2
-            @score << @temp
+            @scores << @temp
             @temp = []
         end
     end
 
     def calc_score
-        @score.each.with_index(1) do |score, index| #index:スコアの番号
-            # index(1) =>本来は0,1,2...で数えるけど、1から始まるようにする❣
+        @scores.each.with_index(1) do |score, index| #index:スコアの番号
+            #index(1) =>本来は0,1,2...で数えるけど、1から始まるようにする
             if spare?(score) && not_last_frame?(index)
-                @total_score += calc_space_bonus(index)
-                # if (score.inject(:+) == 10) && (index < 10)
-            #     @total_score += 10 + @score[index].first #[index:番号のみが入っている]
+                @total_score += calc_spare_bonus(index)
+                #if (score.inject(:+) == 10) && (index < 10)
+            #@total_score += 10 + @score[index].first #[index:番号のみが入っている]
             else
                 @total_score += score.inject(:+) #そのframeをそのまま合計に加算
             end
@@ -54,8 +54,8 @@ class Bowling
         index < 10
     end
 
-    def calc_score_bonus(index)
-        10 + @score[index].first
+    def calc_spare_bonus(index)
+        10 + @scores[index].first
     end
  end
 
