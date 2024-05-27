@@ -41,17 +41,17 @@ describe "ボウリングのスコア計算" do #メイン：ボウリングの�
                 @game.calc_score
                   # 期待する合計　※()内はボーナス点
                   # 3 + 7 + (4) = 14
-                expect(@game.frame_score(1)).to eq 14
-              end
+              expect(@game.frame_score(1)).to eq 14
             end
+          end
             
         context "ストライクを取った場合" do #2.4.5-2
-              it "ストライクボーナスが加算されること" do
+            it "ストライクボーナスが加算されること" do
                 # 第一フレームでストライク
-                @game.add_score(10)
+              @game.add_score(10)
                       # 第二フレームで5点, 4点
-                @game.add_score(5)
-                @game.add_score(4)
+              @game.add_score(5)
+              @game.add_score(4)
                       # 以降は全てガター
                       add_many_scores(16, 0)
                       # 合計を計算
@@ -65,16 +65,16 @@ describe "ボウリングのスコア計算" do #メイン：ボウリングの�
 
     describe "フレームごとの合計" do
         context "全ての投球で１ピンずつ倒した場合" do
-            it "20になること" do
-                add_many_scores(20,1) #重複を減らす：再利用性を高める
+          it "20になること" do
+            add_many_scores(20,1) #重複を減らす：再利用性を高める
                 # @game = Bowling.new    #@game:新規インスタンス
                 # 20.times do
                 #     @game.add_score(1)
                 # end
-                @game.calc_score #sum
-                expect(@game.total_score).to eq 20 #期待する実際の数値
-              end
-            end
+            @game.calc_score #sum
+            expect(@game.total_score).to eq 20 #期待する実際の数値
+          end
+        end
 
         context "スペアを取った場合" do
           it "スペアボーナスが加算されること" do

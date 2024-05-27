@@ -16,10 +16,15 @@ class Bowling
         @total_score = 0
         @scores = []
         @temp = []
+        @flame_score = [] #フレームごとの合計を格納
     end
 
     def total_score
         @total_score
+    end
+
+    def flame_score(frame)
+        @flame_score[frame - 1]
     end
 
     def add_score(pins)
@@ -31,15 +36,6 @@ class Bowling
         end
     end
 
-    
-    #add score
-    def add_many_score(pins)
-      @temp << pins
-      if @temp.size == 2 || strike?(@temp)
-        @scores << @temp
-        @temp = []
-      end
-    end
     #score.sum
     def calc_score
         @scores.each.with_index(1) do |score, index| #index:スコアの番号
@@ -51,9 +47,11 @@ class Bowling
           @total_score += calc_spare_bonus(index)
           #if (score.inject(:+) == 10) && (index < 10)
           #@total_score += 10 + @score[index].first #[index:番号のみが入っている]
-          else
-              @total_score += score.inject(:+) #そのframeをそのまま合計に加算
-          end
+        else
+          @total_score += score.inject(:+) #そのframeをそのまま合計に加算
+        end
+
+          @flame_score << @total_score 
         end
       end         
       
@@ -85,8 +83,9 @@ class Bowling
 
       def calc_spare_bonus(index)
         10 + @scores[index].first
+      
       end
- end
+end
 
 
 
